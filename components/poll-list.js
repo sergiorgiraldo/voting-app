@@ -1,25 +1,9 @@
-function PollList(){
-    const POLLS=[
-        {
-            id: "1",
-            description:"Who will win FIFA cup 2022",
-            status: "open"
-        },
-        {
-            id: "2",
-            description:"Which country has the best pizza",
-            status: "open"
-        },
-        {
-            id: "3",
-            description:"Which superhero is the strongest",
-            status: "closed"
-        }
-    ];
+function PollList(props){	
+    const polls = props.items;
 	
     return (
 		<ul>
-			{POLLS
+			{polls
                 .map((poll) => (
                 <li key={poll.id}>    
                     <a

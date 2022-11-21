@@ -1,0 +1,23 @@
+{
+    "polls":
+    [
+        {
+            "id": "1",
+            "description":"Who will win FIFA cup 2022",
+            "status": "open",
+            "options": ["Brazil", "Argentina", "England", "Denmark"]
+        },
+        {
+            "id": "2",
+            "description":"Which country has the best pizza",
+            "status": "open",
+            "options": ["Brazil", "Italia", "United States"]
+        },
+        {
+            "id": "3",
+            "description":"Which superhero is the strongest",
+            "status": "closed",
+            "options": ["Hulk", "Batman", "Iron Man", "Superman", "Miss Marvel"]
+        }
+    ]
+}
