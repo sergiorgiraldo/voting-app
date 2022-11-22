@@ -23,12 +23,12 @@ function PollPage(props){
 				</h3>
 
                 <ul>
-			        {poll.options.map((option) => (
-                        <li>    
-                           {option}
-                        </li>
-			        ))}
-		        </ul>				
+					{poll.options.map(({option,count}) => (
+					<li className={styles.li}>
+						<button>{option}</button> [{count}] 
+					</li>
+                    ))}		        
+				</ul>				
 			</main>
 
 			<footer className={styles.footer}>

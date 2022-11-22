@@ -5,19 +5,34 @@
             "id": "1",
             "description":"Who will win FIFA cup 2022",
             "status": "open",
-            "options": ["Brazil", "Argentina", "England", "Denmark"]
+            "options": [
+                {"option":"Brazil", "count":1}, 
+                {"option":"Argentina", "count":5}, 
+                {"option":"England", "count":3}, 
+                {"option":"Denmark", "count":1}
+            ]
         },
         {
             "id": "2",
             "description":"Which country has the best pizza",
             "status": "open",
-            "options": ["Brazil", "Italia", "United States"]
+            "options": [
+                {"option":"Brazil", "count":112}, 
+                {"option":"Italia", "count":143}, 
+                {"option":"United States", "count":87}
+            ]
         },
         {
             "id": "3",
             "description":"Which superhero is the strongest",
             "status": "closed",
-            "options": ["Hulk", "Batman", "Iron Man", "Superman", "Miss Marvel"]
+            "options": [
+                {"option":"Hulk", "count":234}, 
+                {"option":"Batman", "count":0}, 
+                {"option":"Iron Man", "count":54}, 
+                {"option":"Superman", "count":12}, 
+                {"option":"Miss Marvel", "count":14}
+            ]
         }
     ]
 }
