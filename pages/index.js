@@ -2,13 +2,14 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import PollList from "../components/poll-list";
+import {GetPolls} from "../components/poll";
 
-export default function Home() {
+export default function Home(props) {
 	
 	return (
 		<div className={styles.container}>
 			<Head>
-				<title>Create Next App</title>
+				<title>Polls</title>
 				<meta
 					name="description"
 					content="Polls"
@@ -21,7 +22,7 @@ export default function Home() {
 					Polls
 				</h1>
 
-				<PollList/>
+				<PollList items={props.polls}/>
 			</main>
 
 			<footer className={styles.footer}>
@@ -44,4 +45,14 @@ export default function Home() {
 			</footer>
 		</div>
 	);
+}
+
+export async function getStaticProps() {
+	const data = GetPolls();
+	return {
+		props: {
+			polls: data,
+		},
+		revalidate: 10,
+	};	
 }
