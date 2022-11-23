@@ -1,15 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import PollList from "../components/poll-list";
-import {GetPolls} from "../components/poll";
+import styles from "../../styles/Home.module.css";
 
-export default function Home(props) {
+export default function NewPoll() {
 	
 	return (
 		<div className={styles.container}>
 			<Head>
-				<title>Polls</title>
+				<title>New Poll</title>
 				<meta
 					name="description"
 					content="Polls"
@@ -19,14 +17,25 @@ export default function Home(props) {
 
 			<main className={styles.main}>
 				<h1 className={styles.title}>
-					Polls
+					New Poll
 				</h1>
 
-				<PollList items={props.polls}/>
+                <form>
+                    <p>
+                        <label for="description">Description</label>
+                        <br />
+                        <input type="text" name="description" id="description"/>
+                    </p>
+                    <p>
+                        <label for="options">Options</label>
+                        <br />
+                        <textarea name="options" id="options" cols="80" rows="10"></textarea>
+                    </p>
+                    <p>
+                        <button> OK </button>
+                    </p>
+                </form>
 
-				<p>
-					<a href="/poll/new">New poll</a>
-				</p>				
 			</main>
 
 			<footer className={styles.footer}>
@@ -51,12 +60,3 @@ export default function Home(props) {
 	);
 }
 
-export async function getStaticProps() {
-	const data = GetPolls();
-	return {
-		props: {
-			polls: data,
-		},
-		revalidate: 10,
-	};	
-}
