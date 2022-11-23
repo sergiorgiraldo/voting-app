@@ -20,3 +20,7 @@ export function UpdatePoll(pollId, pollOptionId){
     const filePath = path.join(process.cwd(), "components/dummy.json"); 
     fs.writeFileSync(filePath, newData);
 } 
+
+export function InsertPoll(description, options){
+    console.log(`Inserting-> ${description} | ${options}`);
+}

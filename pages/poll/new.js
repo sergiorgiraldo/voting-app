@@ -1,9 +1,23 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../../styles/Home.module.css";
+import {useRef} from "react";
 
 export default function NewPoll() {
-	
+    const descriptionInputRef = useRef();
+    const optionsInputRef = useRef();
+
+	function handleSubmit(event){
+        event.preventDefault();
+        const description_ = descriptionInputRef.current.value;
+        const options_ = optionsInputRef.current.value;
+
+		fetch("/api",{
+			body: JSON.stringify({ description: description_, options: options_ }),
+			method: 'PUT'
+		  });    
+    }
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -20,16 +34,20 @@ export default function NewPoll() {
 					New Poll
 				</h1>
 
-                <form>
+                <form onSubmit={handleSubmit}>
                     <p>
-                        <label for="description">Description</label>
+                        <label htmlFor="description">Description</label>
                         <br />
-                        <input type="text" name="description" id="description"/>
+                        <input 
+                            type="text" name="description" id="description" ref={descriptionInputRef}>
+                        </input>        
                     </p>
                     <p>
-                        <label for="options">Options</label>
+                        <label htmlFor="options">Options</label>
                         <br />
-                        <textarea name="options" id="options" cols="80" rows="10"></textarea>
+                        <textarea 
+                            name="options" id="options" cols="80" rows="10" ref={optionsInputRef}>
+                        </textarea>
                     </p>
                     <p>
                         <button> OK </button>
