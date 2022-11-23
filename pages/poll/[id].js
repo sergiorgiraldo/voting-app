@@ -1,14 +1,16 @@
 import styles from "../../styles/Home.module.css";
-import GetPolls from "../../components/poll";
+import {GetPolls} from "../../components/poll";
 import Head from "next/head";
 import Image from "next/image";
 
 function PollPage(props){
 	const poll = props.poll;
 
-	function handleClick(pollId, pollOptionId){
-		console.log("pollId" + pollId);
-		console.log("pollOptionId" + pollOptionId);
+	function handleClick(pollId_, pollOptionId_){
+		fetch("/api",{
+			body: JSON.stringify({ pollId: pollId_, pollOptionId: pollOptionId_ }),
+			method: 'POST'
+		  });
 	}
 
     return (
@@ -29,7 +31,7 @@ function PollPage(props){
 
                 <ul>
 					{poll.options.map(({id,option,count}) => (
-					<li className={styles.li}>
+					<li className={styles.li} key={id}>
 						<button onClick={()=>handleClick(poll.id, id)}>{option}</button> [{count}] 
 					</li>
                     ))}		        
@@ -74,9 +76,9 @@ export async function getStaticProps(context) {
 export async function getStaticPaths() {
 	return {
 		paths: [
-			{ params: { id: '1' }},
-			{ params: { id: '2' }},
-			{ params: { id: '3' }}
+			{ params: { id: "1" }},
+			{ params: { id: "2" }},
+			{ params: { id: "3" }}
 		],
 		fallback: true,
 	};

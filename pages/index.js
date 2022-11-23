@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import PollList from "../components/poll-list";
-import GetPolls from "../components/poll";
+import {GetPolls} from "../components/poll";
 
 export default function Home(props) {
 	
