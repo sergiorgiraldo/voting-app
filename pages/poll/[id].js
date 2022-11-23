@@ -6,6 +6,11 @@ import Image from "next/image";
 function PollPage(props){
 	const poll = props.poll;
 
+	function handleClick(pollId, pollOptionId){
+		console.log("pollId" + pollId);
+		console.log("pollOptionId" + pollOptionId);
+	}
+
     return (
 		<div className={styles.container}>
 			<Head>
@@ -23,9 +28,9 @@ function PollPage(props){
 				</h3>
 
                 <ul>
-					{poll.options.map(({option,count}) => (
+					{poll.options.map(({id,option,count}) => (
 					<li className={styles.li}>
-						<button>{option}</button> [{count}] 
+						<button onClick={()=>handleClick(poll.id, id)}>{option}</button> [{count}] 
 					</li>
                     ))}		        
 				</ul>				
