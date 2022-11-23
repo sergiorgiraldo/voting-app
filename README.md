@@ -4,5 +4,5 @@ Using Azure Boards to manage work items; code hosted in Github; releases should 
 
 --
 
-git remote add --mirror=fetch secondary https://sergiorgiraldo@dev.azure.com/sergiorgiraldo/Voting%20app/_git/Voting%20app
+git remote add --mirror=fetch secondary https://sergiorgiraldo@dev.azure.com/sergiorgiraldo/Voting%20app/\_git/Voting%20app
 git push secondary --all

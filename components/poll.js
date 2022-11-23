@@ -1,26 +1,26 @@
-import fs from "fs"; 
+import fs from "fs";
 import path from "path";
 
-export function GetPolls(){
-    const filePath = path.join(process.cwd(), "components/dummy.json"); 
+export function GetPolls() {
+	const filePath = path.join(process.cwd(), "components/dummy.json");
 	const jsonData = fs.readFileSync(filePath);
-	const data = JSON.parse(jsonData);  
-    return data.polls;  
+	const data = JSON.parse(jsonData);
+	return data.polls;
 }
 
-export function UpdatePoll(pollId, pollOptionId){
-	const data = GetPolls();  
-    let item = data
-        .filter((p) => p.id == pollId)[0]
-        .options.filter((o) => o.id == pollOptionId)[0];
-    item.count += 1
+export function UpdatePoll(pollId, pollOptionId) {
+	const data = GetPolls();
+	let item = data
+		.filter((p) => p.id == pollId)[0]
+		.options.filter((o) => o.id == pollOptionId)[0];
+	item.count += 1;
 
-    let newData = `{"polls":${JSON.stringify(data)}}`;
+	let newData = `{"polls":${JSON.stringify(data)}}`;
 
-    const filePath = path.join(process.cwd(), "components/dummy.json"); 
-    fs.writeFileSync(filePath, newData);
-} 
+	const filePath = path.join(process.cwd(), "components/dummy.json");
+	fs.writeFileSync(filePath, newData);
+}
 
-export function InsertPoll(description, options){
-    console.log(`Inserting-> ${description} | ${options}`);
+export function InsertPoll(description, options) {
+	console.log(`Inserting-> ${description} | ${options}`);
 }

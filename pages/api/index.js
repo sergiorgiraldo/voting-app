@@ -6,12 +6,11 @@ export default function handler(req, res) {
 
 		const pollId = data.pollId;
 		const pollOptionId = data.pollOptionId;
-		
+
 		UpdatePoll(pollId, pollOptionId);
 
 		res.status(200).json({ name: "Voted" });
-	}
-	else if (req.method == "PUT"){
+	} else if (req.method == "PUT") {
 		const data = JSON.parse(req.body);
 
 		const description = data.description;
@@ -20,8 +19,7 @@ export default function handler(req, res) {
 		InsertPoll(description, options);
 
 		res.status(200).json({ name: "Inserted" });
-	}
-	else{
+	} else {
 		res.status(200).json({ name: "Reaching!!!" });
 	}
 }
