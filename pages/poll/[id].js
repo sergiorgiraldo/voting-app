@@ -35,7 +35,10 @@ function PollPage(props){
 						<button onClick={()=>handleClick(poll.id, id)}>{option}</button> [{count}] 
 					</li>
                     ))}		        
-				</ul>				
+				</ul>
+				<p>
+					<a href="/">Home</a>
+				</p>				
 			</main>
 
 			<footer className={styles.footer}>
