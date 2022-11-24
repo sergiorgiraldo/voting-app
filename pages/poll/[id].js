@@ -1,44 +1,54 @@
 import styles from "../../styles/Home.module.css";
-import {GetPolls} from "../../components/poll";
+import { GetPolls } from "../../components/poll";
 import Head from "next/head";
 import Image from "next/image";
+import { Fragment } from "react";
 
-function PollPage(props){
+function PollPage(props) {
 	const poll = props.poll;
 
-	function handleClick(pollId_, pollOptionId_){
-		fetch("/api",{
-			body: JSON.stringify({ pollId: pollId_, pollOptionId: pollOptionId_ }),
-			method: 'POST'
-		  });
+	function handleClick(pollId_, pollOptionId_) {
+		fetch("/api/vote", {
+			body: JSON.stringify({
+				pollId: pollId_,
+				pollOptionId: pollOptionId_
+			}),
+			method: "POST"
+		});
 	}
 
-    return (
+	return (
 		<div className={styles.container}>
 			<Head>
 				<title>Poll</title>
-				<meta
-					name="description"
-					content="Poll"
-				/>
+				<meta name="description" content="Poll" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
 			<main className={styles.main}>
-				<h3 className={styles.title}>
-					{poll.description}
-				</h3>
-
-                <ul>
-					{poll.options.map(({id,option,count}) => (
-					<li className={styles.li} key={id}>
-						<button onClick={()=>handleClick(poll.id, id)}>{option}</button> [{count}] 
-					</li>
-                    ))}		        
+				<h3 className={styles.title}>{poll.description}</h3>
+				<ul>
+					{poll.options.map(({ id, option, count }) => (
+						<li className={styles.li} key={id}>
+							{poll.status == "open" &&
+								<Fragment>
+									<button onClick={() => handleClick(poll.id, id)}>
+										{option}
+									</button>
+								</Fragment>
+							}
+							{poll.status == "closed" &&
+								<Fragment>
+									{option}
+								</Fragment> 
+							}
+							&nbsp;&nbsp;[{count} vote{(count > 1 || count ==0) && "s"}]
+						</li>
+					))}
 				</ul>
 				<p>
 					<a href="/">Home</a>
-				</p>				
+				</p>
 			</main>
 
 			<footer className={styles.footer}>
@@ -56,7 +66,6 @@ function PollPage(props){
 						/>
 					</span>
 				</a>
-				
 				&copy; Sergio Rodrigues Giraldo - 2022
 			</footer>
 		</div>
@@ -65,6 +74,7 @@ function PollPage(props){
 
 export async function getStaticProps(context) {
 	const data = GetPolls();
+	console.log(JSON.stringify(data));
 	const pollId = context.params.id;
 	const poll = data.filter((p) => p.id == pollId)[0];
 
@@ -72,19 +82,19 @@ export async function getStaticProps(context) {
 		props: {
 			poll: poll
 		},
-		revalidate: 10,
-	};	
+		revalidate: 10
+	};
 }
 
 export async function getStaticPaths() {
+	const data = GetPolls();
+	const paths = data.map((p) => ({ params: { id: "" + p.id } }));
+
 	return {
-		paths: [
-			{ params: { id: "1" }},
-			{ params: { id: "2" }},
-			{ params: { id: "3" }}
-		],
+		paths: paths,
 		fallback: true,
 	};
+
 }
 
 export default PollPage;
