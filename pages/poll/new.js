@@ -12,7 +12,7 @@ export default function NewPoll() {
 		const description_ = descriptionInputRef.current.value;
 		const options_ = optionsInputRef.current.value;
 
-		fetch("/api", {
+		fetch("/api/poll", {
 			body: JSON.stringify({
 				description: description_,
 				options: options_

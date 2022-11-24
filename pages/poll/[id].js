@@ -8,7 +8,7 @@ function PollPage(props) {
 	const poll = props.poll;
 
 	function handleClick(pollId_, pollOptionId_) {
-		fetch("/api", {
+		fetch("/api/vote", {
 			body: JSON.stringify({
 				pollId: pollId_,
 				pollOptionId: pollOptionId_
@@ -74,6 +74,7 @@ function PollPage(props) {
 
 export async function getStaticProps(context) {
 	const data = GetPolls();
+	console.log(JSON.stringify(data));
 	const pollId = context.params.id;
 	const poll = data.filter((p) => p.id == pollId)[0];
 
@@ -86,14 +87,14 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
+	const data = GetPolls();
+	const paths = data.map((p) => ({ params: { id: "" + p.id } }));
+
 	return {
-		paths: [
-			{ params: { id: "1" } },
-			{ params: { id: "2" } },
-			{ params: { id: "3" } }
-		],
-		fallback: true
+		paths: paths,
+		fallback: true,
 	};
+
 }
 
 export default PollPage;
