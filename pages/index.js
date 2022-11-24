@@ -2,27 +2,25 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import PollList from "../components/poll-list";
-import {GetPolls} from "../components/poll";
+import { GetPolls } from "../components/poll";
 
 export default function Home(props) {
-	
 	return (
 		<div className={styles.container}>
 			<Head>
 				<title>Polls</title>
-				<meta
-					name="description"
-					content="Polls"
-				/>
+				<meta name="description" content="Polls" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
 			<main className={styles.main}>
-				<h1 className={styles.title}>
-					Polls
-				</h1>
+				<h1 className={styles.title}>Polls</h1>
 
-				<PollList items={props.polls}/>
+				<PollList items={props.polls} />
+
+				<p>
+					<a href="/poll/new">New poll</a>
+				</p>
 			</main>
 
 			<footer className={styles.footer}>
@@ -40,7 +38,6 @@ export default function Home(props) {
 						/>
 					</span>
 				</a>
-				
 				&copy; Sergio Rodrigues Giraldo - 2022
 			</footer>
 		</div>
@@ -51,8 +48,8 @@ export async function getStaticProps() {
 	const data = GetPolls();
 	return {
 		props: {
-			polls: data,
+			polls: data
 		},
-		revalidate: 10,
-	};	
+		revalidate: 10
+	};
 }
