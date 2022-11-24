@@ -51,6 +51,13 @@ export function InsertPoll(description, options) {
 	fs.writeFileSync(filePath, newData);
 }
 
-export function UpdatePoll() {
-	console.log("Not implemented");
+export function UpdatePoll(id, description, status) {
+	const data = GetPolls();
+	let item = data.filter((p) => p.id == id)[0];
+	item.description = description;
+	item.status = status;
+
+	const filePath = path.join(process.cwd(), "components/dummy.json");
+	let newData = `{"polls": ${JSON.stringify(data)}}`;
+	fs.writeFileSync(filePath, newData);
 }

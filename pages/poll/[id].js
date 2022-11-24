@@ -7,17 +7,19 @@ import { useRef } from "react";
 function PollUpdatePage(props) {
 	const poll = props.poll;
 	const descriptionInputRef = useRef();
-	const optionsInputRef = useRef();
+	const statusInputRef = useRef();
 
 	function handleSubmit(event) {
 		event.preventDefault();
 		const description_ = descriptionInputRef.current.value;
-		const options_ = optionsInputRef.current.value;
+		const status_ = statusInputRef.current.value;
+		const id_= poll.id;
 
 		fetch("/api/poll", {
 			body: JSON.stringify({
 				description: description_,
-				options: options_
+				status: status_,
+				id: id_
 			}),
 			method: "POST"
 		});
@@ -42,7 +44,7 @@ function PollUpdatePage(props) {
 							name="description"
 							id="description"
 							ref={descriptionInputRef}
-							value={poll.description}
+							defaultValue={poll.description}
 							>
 						</input>
 					</p>
@@ -54,10 +56,21 @@ function PollUpdatePage(props) {
 							id="options"
 							cols="80"
 							rows="10"
-							ref={optionsInputRef}
 							value={optionsFlattened}
 							>
 						</textarea>
+					</p>
+					<p>
+						<label htmlFor="status">Status (open|closed)</label>
+						<br />
+						<input
+							type="text"
+							name="status"
+							id="status"
+							ref={statusInputRef}
+							defaultValue={poll.status}
+							>
+						</input>
 					</p>
 					<p>
 						<button> OK </button>
@@ -91,7 +104,6 @@ function PollUpdatePage(props) {
 
 export async function getStaticProps(context) {
 	const data = GetPolls();
-	console.log(JSON.stringify(data));
 	const pollId = context.params.id;
 	const poll = data.filter((p) => p.id == pollId)[0];
 

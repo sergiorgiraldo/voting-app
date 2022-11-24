@@ -74,7 +74,6 @@ function PollVotePage(props) {
 
 export async function getStaticProps(context) {
 	const data = GetPolls();
-	console.log(JSON.stringify(data));
 	const pollId = context.params.id;
 	const poll = data.filter((p) => p.id == pollId)[0];
 
