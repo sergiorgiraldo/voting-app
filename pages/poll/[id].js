@@ -2,6 +2,7 @@ import styles from "../../styles/Home.module.css";
 import { GetPolls } from "../../components/poll";
 import Head from "next/head";
 import Image from "next/image";
+import { Fragment } from "react";
 
 function PollPage(props) {
 	const poll = props.poll;
@@ -26,14 +27,22 @@ function PollPage(props) {
 
 			<main className={styles.main}>
 				<h3 className={styles.title}>{poll.description}</h3>
-
 				<ul>
 					{poll.options.map(({ id, option, count }) => (
 						<li className={styles.li} key={id}>
-							<button onClick={() => handleClick(poll.id, id)}>
-								{option}
-							</button>{" "}
-							[{count}]
+							{poll.status == "open" &&
+								<Fragment>
+									<button onClick={() => handleClick(poll.id, id)}>
+										{option}
+									</button>
+								</Fragment>
+							}
+							{poll.status == "closed" &&
+								<Fragment>
+									{option}
+								</Fragment> 
+							}
+							&nbsp;&nbsp;[{count} vote{(count > 1 || count ==0) && "s"}]
 						</li>
 					))}
 				</ul>
