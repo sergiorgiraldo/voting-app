@@ -2,29 +2,21 @@ import styles from "../../styles/Home.module.css";
 import { GetPolls } from "../../components/poll";
 import Head from "next/head";
 import Image from "next/image";
-import { useRef } from "react";
+import { Fragment } from "react";
 
-function PollUpdatePage(props) {
+function PollVotePage(props) {
 	const poll = props.poll;
-	const descriptionInputRef = useRef();
-	const statusInputRef = useRef();
 
-	function handleSubmit(event) {
-		event.preventDefault();
-		const description_ = descriptionInputRef.current.value;
-		const status_ = statusInputRef.current.value;
-		const id_= poll.id;
-
-		fetch("/api/poll", {
+	function handleClick(pollId_, pollOptionId_) {
+		fetch("/api/vote", {
 			body: JSON.stringify({
-				description: description_,
-				status: status_,
-				id: id_
+				pollId: pollId_,
+				pollOptionId: pollOptionId_
 			}),
 			method: "POST"
 		});
 	}
-	const optionsFlattened = poll.options.map((o)=>o.option).join("\n");
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -34,48 +26,26 @@ function PollUpdatePage(props) {
 			</Head>
 
 			<main className={styles.main}>
-				<h3 className={styles.title}>Update</h3>
-				<form onSubmit={handleSubmit}>
-					<p>
-						<label htmlFor="description">Description</label>
-						<br />
-						<input
-							type="text"
-							name="description"
-							id="description"
-							ref={descriptionInputRef}
-							defaultValue={poll.description}
-							>
-						</input>
-					</p>
-					<p>
-						<label htmlFor="options">Options</label>
-						<br />
-						<textarea
-							name="options"
-							id="options"
-							cols="80"
-							rows="10"
-							value={optionsFlattened}
-							>
-						</textarea>
-					</p>
-					<p>
-						<label htmlFor="status">Status (open|closed)</label>
-						<br />
-						<input
-							type="text"
-							name="status"
-							id="status"
-							ref={statusInputRef}
-							defaultValue={poll.status}
-							>
-						</input>
-					</p>
-					<p>
-						<button> OK </button>
-					</p>
-				</form>
+				<h3 className={styles.title}>{poll.description}</h3>
+				<ul>
+					{poll.options.map(({ id, option, count }) => (
+						<li className={styles.li} key={id}>
+							{poll.status == "open" &&
+								<Fragment>
+									<button onClick={() => handleClick(poll.id, id)}>
+										{option}
+									</button>
+								</Fragment>
+							}
+							{poll.status == "closed" &&
+								<Fragment>
+									{option}
+								</Fragment> 
+							}
+							&nbsp;&nbsp;[{count} vote{(count > 1 || count ==0) && "s"}]
+						</li>
+					))}
+				</ul>
 				<p>
 					<a href="/">Home</a>
 				</p>
@@ -126,4 +96,4 @@ export async function getStaticPaths() {
 
 }
 
-export default PollUpdatePage;
+export default PollVotePage;
