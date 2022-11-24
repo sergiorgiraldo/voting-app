@@ -3,7 +3,9 @@ import { InsertPoll, UpdatePoll } from "../../../components/poll";
 export default function handler(req, res) {
 	if (req.method == "POST") {
 		const data = JSON.parse(req.body);
-
+		const description = data.description;
+		const options = data.options;
+		
 		UpdatePoll();
 
 		res.status(200).json({ name: "Updated" });
