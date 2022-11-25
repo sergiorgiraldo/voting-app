@@ -1,6 +1,7 @@
 import { InsertPoll, UpdatePoll } from "../../../components/poll";
+import { connectDatabase, insertDocument } from "../../../lib/db-utils";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
 	if (req.method == "POST") {
 		const data = JSON.parse(req.body);
 		const id = data.id;
@@ -17,6 +18,27 @@ export default function handler(req, res) {
 		const options = data.options;
 
 		InsertPoll(description, options);
+
+		//database
+		let client;
+
+		const newPoll = {
+			"description": description,
+			"status": "open",
+			"options": options
+		};
+
+		try {
+			client = await connectDatabase();
+			await insertDocument(client, "voting", newPoll);
+		}
+		catch (error) {
+			console.log(error);
+			return;
+		}
+		finally{
+			client.close();
+		}		
 
 		res.status(200).json({ name: "Inserted" });
 	} else {

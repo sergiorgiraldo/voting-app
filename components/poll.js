@@ -51,6 +51,7 @@ export function InsertPoll(description, options) {
 	fs.writeFileSync(filePath, newData);
 }
 
+
 export function UpdatePoll(id, description, status) {
 	const data = GetPolls();
 	let item = data.filter((p) => p.id == id)[0];
