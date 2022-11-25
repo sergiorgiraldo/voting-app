@@ -117,11 +117,11 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
 	const data = GetPolls();
-	const paths = data.map((p) => ({ params: { id: "" + p.id } }));
+	const paths = data.map((p) => ({ params: { id: p.id.toString() } }));
 
 	return {
 		paths: paths,
-		fallback: true,
+		fallback: "blocking",
 	};
 
 }
