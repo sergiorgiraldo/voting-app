@@ -17,8 +17,6 @@ export default async function handler(req, res) {
 		const description = data.description;
 		const options = data.options;
 
-		InsertPoll(description, options);
-
 		//database
 		let client;
 
@@ -39,6 +37,9 @@ export default async function handler(req, res) {
 		finally{
 			client.close();
 		}		
+
+		//json
+		InsertPoll(description, options);
 
 		res.status(200).json({ name: "Inserted" });
 	} else {
